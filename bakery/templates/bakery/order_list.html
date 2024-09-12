@@ -1,0 +1,39 @@
+<title>Список заказов</title>
+<style type="text/css">
+  table, td, th {
+  border: 3px solid #245488;
+}
+</style>
+<table>
+    <thead>
+      <h2>Список заказов</h2>
+      <tr>
+        <th>Имя клиента</th>
+        <th>Дата заказа</th>
+        <th>Время заказа</th>
+        <th>Продукты</th>
+        <th>Общее время приготовления</th>
+        <th>Прогресс приготовления</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+      <tr>
+        <td>{{ order.person_name }}</td>
+        <td>{{ order.date }}</td>
+        <td>{{ order.created_at}}</td>
+        <td>
+          <ul>
+            {% for item in order.items %}
+            <li>{{ item.product.name }}: {{ item.quantity }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td>{{ order.total_cook_time }} минут</td>
+        <td>
+            <progress value="{{ order.cook_progress }}" max="100"></progress> {{ order.cook_progress }}%
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>  

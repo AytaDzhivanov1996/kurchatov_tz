@@ -1,0 +1,41 @@
+<form method="post">
+    {% csrf_token %}
+    <label for="person_name">Имя клиента:</label>
+    <input type="text" name="person_name" required>
+  
+    <div id="products">
+      <div class="product">
+        <label for="product">Продукт:</label>
+        <select name="product" required>
+          {% for product in products %}
+            <option value="{{ product.id }}">{{ product.name }}</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="quantity" min="1" required placeholder="Количество">
+      </div>
+    </div>
+  
+    <button type="button" onclick="addProduct()">Добавить продукт</button>
+    <button type="submit">Создать заказ</button>
+  </form>
+  
+  <script>
+  function addProduct() {
+    const productDiv = document.createElement('div');
+    productDiv.classList.add('product');
+  
+    const selectHTML = `
+      <label for="product">Продукт:</label>
+      <select name="product" required>
+        {% for product in products %}
+          <option value="{{ product.id }}">{{ product.name }}</option>
+        {% endfor %}
+      </select>
+      <input type="number" name="quantity" min="1" required placeholder="Количество">
+    `;
+  
+    productDiv.innerHTML = selectHTML;
+    document.getElementById('products').appendChild(productDiv);
+  }
+  </script>
+   
